@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.material3)
     // 使用 AppCompat 库，确保版本兼容
     implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // 确保使用最新版本
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

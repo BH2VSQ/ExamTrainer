@@ -5,57 +5,115 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+    <!-- 分类统计 -->
     <TextView
-        android:id="@+id/questionTextView"
+        android:id="@+id/classification_stats_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 认知率 -->
+    <TextView
+        android:id="@+id/recognition_rate_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/classification_stats_text_view"
+        android:layout_marginTop="5dp" />
+
+    <!-- 预估分 -->
+    <TextView
+        android:id="@+id/estimated_score_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recognition_rate_text_view"
+        android:layout_marginTop="5dp" />
+
+    <!-- 题目图片 -->
+    <ImageView
+        android:id="@+id/image_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/estimated_score_text_view"
+        android:layout_marginTop="10dp"
+        android:visibility="gone" />
+
+    <!-- 题目ID -->
+    <TextView
+        android:id="@+id/question_id_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/image_view"
+        android:layout_marginTop="10dp" />
+
+    <!-- 题目内容 -->
+    <TextView
+        android:id="@+id/question_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/question_id_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
-
+        android:layout_marginTop="10dp" />
+    <!-- 选项组 -->
     <RadioGroup
         android:id="@+id/optionRadioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/questionTextView"
+        app:layout_constraintTop_toBottomOf="@id/question_text_view"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:gravity="center">
 
         <RadioButton
-            android:id="@+id/optionA"
-            android:layout_width="wrap_content"
+            android:id="@+id/option_a_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Option A" />
+            android:text="Option A"
+            android:background="@drawable/option_button_background"
+            android:layout_margin="5dp" />
 
         <RadioButton
-            android:id="@+id/optionB"
-            android:layout_width="wrap_content"
+            android:id="@+id/option_b_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Option B" />
+            android:text="Option B"
+            android:background="@drawable/option_button_background"
+            android:layout_margin="5dp" />
 
         <RadioButton
-            android:id="@+id/optionC"
-            android:layout_width="wrap_content"
+            android:id="@+id/option_c_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Option C" />
+            android:text="Option C"
+            android:background="@drawable/option_button_background"
+            android:layout_margin="5dp" />
 
         <RadioButton
-            android:id="@+id/optionD"
-            android:layout_width="wrap_content"
+            android:id="@+id/option_d_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Option D" />
+            android:text="Option D"
+            android:background="@drawable/option_button_background"
+            android:layout_margin="5dp" />
+
+        <RadioButton
+            android:id="@+id/dont_know_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="不会"
+            android:background="@drawable/option_button_background"
+            android:layout_margin="5dp" />
     </RadioGroup>
 
-    <Button
-        android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/submit_button_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/optionRadioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>    
+</androidx.constraintlayout.widget.ConstraintLayout>

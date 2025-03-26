@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recognitionRateTextView: TextView
     private lateinit var estimatedScoreTextView: TextView
     private lateinit var questionIdTextView: TextView
-    private lateinit var correctAnswerTextView: TextView
     private var currentQuestion: Question? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             classificationStatsTextView = findViewById(R.id.classification_stats_text_view)
             recognitionRateTextView = findViewById(R.id.recognition_rate_text_view)
             estimatedScoreTextView = findViewById(R.id.estimated_score_text_view)
-            correctAnswerTextView = findViewById(R.id.correct_answer_text_view)
             Log.d("MainActivity", "Views initialized successfully")
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to initialize views: ${e.message}", e)
@@ -95,13 +93,11 @@ class MainActivity : AppCompatActivity() {
                     optionButtons[i].setBackgroundColor(Color.parseColor("#FF808080"))
                     optionButtons[i].isEnabled = true
                 }
-                correctAnswerTextView.text = "正确答案: ${currentQuestion!!.correctAnswer}"
                 showImage()
                 Log.d("MainActivity", "Next question loaded successfully")
             } else {
                 questionIdTextView.text = ""
                 questionTextView.text = "没有更多题目了"
-                correctAnswerTextView.text = ""
                 for (button in optionButtons) {
                     button.isEnabled = false
                 }
