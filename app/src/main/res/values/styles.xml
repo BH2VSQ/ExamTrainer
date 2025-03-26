@@ -1,0 +1,9 @@
+<resources>
+    <!-- 定义继承自 Theme.AppCompat.Light.NoActionBar 的主题 -->
+    <style name="Theme.ExamTrainer" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- 自定义主题属性 -->
+        <item name="colorPrimary">#3F51B5</item>
+        <item name="colorPrimaryDark">#303F9F</item>
+        <item name="colorAccent">#FF4081</item>
+    </style>
+</resources>
