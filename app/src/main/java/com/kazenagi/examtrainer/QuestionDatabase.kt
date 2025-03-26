@@ -92,4 +92,12 @@ class QuestionDatabase(private val context: Context) {
     fun getKnownQuestionCount(): Int {
         return getCategoryCount(QuestionCategory.KNOWLEDGEABLE) + getCategoryCount(QuestionCategory.FAMILIAR) + getCategoryCount(QuestionCategory.MASTERED)
     }
+    // 添加公共方法以访问 questions 列表
+    fun getQuestions(): List<Question> {
+        return questions
+    }
+    // 添加公共方法以访问 categoryMap
+    fun getCategoryMap(): Map<QuestionCategory, List<Question>> {
+        return categoryMap
+    }
 }    

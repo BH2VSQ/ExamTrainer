@@ -1,5 +1,7 @@
 package com.kazenagi.examtrainer
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.graphics.Color
 import android.os.Bundle
@@ -22,7 +24,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recognitionRateTextView: TextView
     private lateinit var estimatedScoreTextView: TextView
     private lateinit var questionIdTextView: TextView
+    private lateinit var correctAnswerTextView: TextView
     private var currentQuestion: Question? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +38,12 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        sharedPreferences = getSharedPreferences("QuestionData", Context.MODE_PRIVATE)
+
         try {
             questionDatabase = QuestionDatabase(this)
+            // 从本地读取题目分类数据
+            loadQuestionCategoriesFromLocal()
             Log.d("MainActivity", "QuestionDatabase initialized successfully")
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to initialize QuestionDatabase: ${e.message}", e)
@@ -93,11 +101,13 @@ class MainActivity : AppCompatActivity() {
                     optionButtons[i].setBackgroundColor(Color.parseColor("#FF808080"))
                     optionButtons[i].isEnabled = true
                 }
+                correctAnswerTextView.text = "正确答案: ${currentQuestion!!.correctAnswer}"
                 showImage()
                 Log.d("MainActivity", "Next question loaded successfully")
             } else {
                 questionIdTextView.text = ""
                 questionTextView.text = "没有更多题目了"
+                correctAnswerTextView.text = ""
                 for (button in optionButtons) {
                     button.isEnabled = false
                 }
@@ -131,6 +141,7 @@ class MainActivity : AppCompatActivity() {
         try {
             val selectedAnswerIndex = optionButtons.indexOf(selectedButton)
             val correctAnswerIndex = currentQuestion!!.options.indexOf(currentQuestion!!.options[currentQuestion!!.correctAnswer[0] - 'A'])
+            Log.d("MainActivity", "Selected answer index: $selectedAnswerIndex, Correct answer index: $correctAnswerIndex")
 
             if (selectedAnswerIndex == correctAnswerIndex) {
                 selectedButton.setBackgroundColor(Color.GREEN)
@@ -147,6 +158,8 @@ class MainActivity : AppCompatActivity() {
 
             updateCategoryCounts()
             updateRecognitionRateAndScore()
+            // 保存题目分类数据到本地
+            saveQuestionCategoriesToLocal()
 
             Handler(Looper.getMainLooper()).postDelayed({
                 showNextQuestion()
@@ -196,6 +209,28 @@ class MainActivity : AppCompatActivity() {
             Log.d("MainActivity", "Recognition rate and score updated successfully")
         } catch (e: Exception) {
             Log.e("MainActivity", "Failed to update recognition rate and score: ${e.message}", e)
+        }
+    }
+
+    private fun saveQuestionCategoriesToLocal() {
+        val editor = sharedPreferences.edit()
+        for (question in questionDatabase.getQuestions()) {
+            editor.putString(question.id, question.category.name)
+        }
+        editor.apply()
+    }
+
+    private fun loadQuestionCategoriesFromLocal() {
+        for (question in questionDatabase.getQuestions()) {
+            val categoryName = sharedPreferences.getString(question.id, null)
+            if (categoryName != null) {
+                question.category = QuestionCategory.valueOf(categoryName)
+                questionDatabase.getCategoryMap()[question.category]?.let {
+                    if (it is MutableList<Question>) {
+                        it.add(question)
+                    }
+                }
+            }
         }
     }
 }
